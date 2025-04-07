@@ -10,6 +10,7 @@ import (
 
 func main() {
 
+	//models.Migrar()
 	mux := mux.NewRouter()
 
 	prefix := "/api/v1"
@@ -19,6 +20,10 @@ func main() {
 	mux.HandleFunc(prefix+"/ejemplo/{id}", handlers.Ejemplo_put).Methods("PUT")
 	mux.HandleFunc(prefix+"/ejemplo/{id}", handlers.Ejemplo_delete).Methods("DELETE")
 	mux.HandleFunc(prefix+"/query-string", handlers.Ejemplo_querystring).Methods("GET")
+
+	prefix2 := "/api/v2"
+	mux.HandleFunc(prefix2+"/ejemplo", handlers.Get_db).Methods("GET")
+	mux.HandleFunc(prefix2+"/ejemplo/{id}", handlers.Get_db_id).Methods("GET")
 
 	log.Fatal(http.ListenAndServe(":8084", mux))
 

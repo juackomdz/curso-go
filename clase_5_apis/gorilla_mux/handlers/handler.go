@@ -6,6 +6,8 @@ import (
 	"net/http"
 
 	dto "clase_5/DTO"
+	db "clase_5/database"
+	"clase_5/models"
 
 	"github.com/gorilla/mux"
 )
@@ -83,4 +85,37 @@ func Ejemplo_delete(res http.ResponseWriter, req *http.Request) {
 func Ejemplo_querystring(res http.ResponseWriter, req *http.Request) {
 	id := req.URL.Query().Get("id")
 	fmt.Fprintln(res, "hola con query string | id: "+id)
+}
+
+//--------------------------------handlers con db-------------------------------//
+
+func Get_db(res http.ResponseWriter, req *http.Request) {
+
+	res.Header().Set("Content-Type", "application/json")
+
+	usuarios := models.Usuarios{}
+	db.Conectar().Find(&usuarios)
+
+	json.NewEncoder(res).Encode(usuarios)
+}
+
+func Get_db_id(res http.ResponseWriter, req *http.Request) {
+
+	res.Header().Set("Content-Type", "application/json")
+
+	vars := mux.Vars(req)
+	id := vars["id"]
+	user := models.Usuario{}
+	db.Conectar().Find(&user, id)
+
+	res.WriteHeader(http.StatusAccepted)
+
+	outp := map[string]any{
+		"estado": http.StatusAccepted,
+		"data":   user,
+	}
+	json.NewEncoder(res).Encode(outp)
+
+	//json.NewEncoder(res).Encode(user)
+
 }
