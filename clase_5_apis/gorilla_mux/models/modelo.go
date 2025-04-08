@@ -11,6 +11,16 @@ type Usuario struct {
 
 type Usuarios []Usuario
 
+type Canal struct {
+	Id        uint    `gorm:"primaryKey;autoIncrement" json:"id"`
+	Nombre    string  `gorm:"type:varchar(100)" json:"nombre"`
+	UsuarioId uint    `json:"usuario_id"`
+	Usuario   Usuario `json:"usuario"`
+}
+
+type Canales []Canal
+
 func Migrar() {
-	db.Conectar().AutoMigrate(&Usuario{})
+	//db.Conectar().AutoMigrate(&Usuario{})
+	db.Conectar().AutoMigrate(&Canal{})
 }
