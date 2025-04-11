@@ -2,6 +2,7 @@ package main
 
 import (
 	"clase_5/handlers"
+	"clase_5/middleware"
 	"log"
 	"net/http"
 
@@ -33,6 +34,11 @@ func main() {
 	mux.HandleFunc(prefix2+"/canal/{id}", handlers.Get_db_id_c).Methods("GET")
 	mux.HandleFunc(prefix2+"/canal/{id}", handlers.Put_db_c).Methods("PUT")
 	mux.HandleFunc(prefix2+"/canal/{id}", handlers.Delete_db_c).Methods("DELETE")
+
+	mux.HandleFunc(prefix2+"/seguridad/registro", handlers.Registro).Methods("POST")
+	mux.HandleFunc(prefix2+"/seguridad/login", handlers.Login).Methods("POST")
+
+	mux.HandleFunc(prefix2+"/seguridad/protegido", middleware.ValidarJWT(handlers.Protegido)).Methods("GET")
 
 	log.Fatal(http.ListenAndServe(":8084", mux))
 
