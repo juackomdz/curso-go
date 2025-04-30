@@ -30,6 +30,8 @@ func main() {
 	//---------------mongodb----------------------
 	prefix := "/mongo"
 	e.POST(prefix+"/categoria", handlers.Categoria_post)
+	e.GET(prefix+"/categoria", handlers.Categoria_get)
+	e.GET(prefix+"/categoria/:id", handlers.Categoria_get_id)
 
 	e.Logger.Fatal(e.Start(":8085"))
 }
