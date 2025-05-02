@@ -32,6 +32,8 @@ func main() {
 	e.POST(prefix+"/categoria", handlers.Categoria_post)
 	e.GET(prefix+"/categoria", handlers.Categoria_get)
 	e.GET(prefix+"/categoria/:id", handlers.Categoria_get_id)
+	e.PUT(prefix+"/categoria/:id", handlers.Categoria_put)
+	e.DELETE(prefix+"/categoria/:id", handlers.Categoria_delete)
 
 	e.Logger.Fatal(e.Start(":8085"))
 }
