@@ -35,5 +35,11 @@ func main() {
 	e.PUT(prefix+"/categoria/:id", handlers.Categoria_put)
 	e.DELETE(prefix+"/categoria/:id", handlers.Categoria_delete)
 
+	e.POST(prefix+"/producto", handlers.Producto_post)
+	e.GET(prefix+"/producto", handlers.Producto_get)
+	e.GET(prefix+"/producto/:id", handlers.Producto_get_id)
+	e.PUT(prefix+"/producto/:id", handlers.Producto_put)
+	e.DELETE(prefix+"/producto/:id", handlers.Producto_delete)
+
 	e.Logger.Fatal(e.Start(":8085"))
 }

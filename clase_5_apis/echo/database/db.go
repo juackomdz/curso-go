@@ -12,6 +12,7 @@ var cliente = Conectar()
 var db = "mongo_echo"
 
 var CategoriaColle = cliente.Database(db).Collection("categorias")
+var ProductoColle = cliente.Database(db).Collection("productos")
 
 func Conectar() *mongo.Client {
 
