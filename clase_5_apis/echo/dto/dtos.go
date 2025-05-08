@@ -1,10 +1,5 @@
 package dto
 
-type GenericoDTO struct {
-	Estado  string
-	Mensaje string
-}
-
 type ProductoDTO struct {
 	Nombre      string `json:"nombre"`
 	Precio      int    `json:"precio"`
@@ -15,4 +10,15 @@ type ProductoDTO struct {
 
 type CategoriaDTO struct {
 	Nombre string `json:"nombre"`
+}
+
+type UserDTO struct {
+	Username string `json:"username"`
+	Password string `json:"password"`
+	Correo   string `json:"correo"`
+}
+
+type LoginDTO struct {
+	Username string `json:"username"`
+	Password string `json:"password"`
 }

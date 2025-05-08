@@ -3,13 +3,18 @@ package main
 import (
 	"clase_5_echo/database"
 	"clase_5_echo/handlers"
+	cjwt "clase_5_echo/jwt"
 
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 )
 
 func main() {
 
 	e := echo.New()
+
+	e.Use(middleware.Logger())
+	e.Use(middleware.Recover())
 
 	database.BoolConectado()
 
@@ -40,6 +45,17 @@ func main() {
 	e.GET(prefix+"/producto/:id", handlers.Producto_get_id)
 	e.PUT(prefix+"/producto/:id", handlers.Producto_put)
 	e.DELETE(prefix+"/producto/:id", handlers.Producto_delete)
+
+	//------------------------jwt----------------------
+	e.POST(prefix+"/usuario", handlers.Registro_user)
+	e.POST(prefix+"/login", handlers.Login)
+
+	r := e.Group("/secure")
+
+	r.GET("/usuarios", handlers.Listar_user_secure, cjwt.MiddlewareJWT())
+
+	//---------------------api externa-----------------------
+	e.GET("/externo", handlers.Traer_datos)
 
 	e.Logger.Fatal(e.Start(":8085"))
 }
