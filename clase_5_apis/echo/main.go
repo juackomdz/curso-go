@@ -12,12 +12,12 @@ import (
 	echoSwagger "github.com/swaggo/echo-swagger"
 )
 
-//	@title			swagger ejemplo
-//	@description	This is a sample server celler server.
-//	@version		1.0
+// @title			swagger ejemplo
+// @description	This is a sample server celler server.
+// @version		1.0
 //
-//	@host			localhost:8085
-//	@BasePath		/
+// @host			localhost:8085
+// @BasePath		/
 func main() {
 
 	e := echo.New()
@@ -42,31 +42,31 @@ func main() {
 	e.DELETE("/users/:id", handlers.Delete_user)
 
 	//---------------mongodb----------------------
-	prefix := "/mongo"
-	e.POST(prefix+"/categoria", handlers.Categoria_post)
-	e.GET(prefix+"/categoria", handlers.Categoria_get)
-	e.GET(prefix+"/categoria/:id", handlers.Categoria_get_id)
-	e.PUT(prefix+"/categoria/:id", handlers.Categoria_put)
-	e.DELETE(prefix+"/categoria/:id", handlers.Categoria_delete)
 
-	e.POST(prefix+"/producto", handlers.Producto_post)
-	e.GET(prefix+"/producto", handlers.Producto_get)
-	e.GET(prefix+"/producto/:id", handlers.Producto_get_id)
-	e.PUT(prefix+"/producto/:id", handlers.Producto_put)
-	e.DELETE(prefix+"/producto/:id", handlers.Producto_delete)
+	m := e.Group("/mongo")
+	m.POST("/categoria", handlers.Categoria_post)
+	m.GET("/categoria", handlers.Categoria_get)
+	m.GET("/categoria/:id", handlers.Categoria_get_id)
+	m.PUT("/categoria/:id", handlers.Categoria_put)
+	m.DELETE("/categoria/:id", handlers.Categoria_delete)
+
+	m.POST("/producto", handlers.Producto_post)
+	m.GET("/producto", handlers.Producto_get)
+	m.GET("/producto/:id", handlers.Producto_get_id)
+	m.PUT("/producto/:id", handlers.Producto_put)
+	m.DELETE("/producto/:id", handlers.Producto_delete)
 
 	//------------------------jwt----------------------
-	e.POST(prefix+"/usuario", handlers.Registro_user)
-	e.POST(prefix+"/login", handlers.Login)
+	m.POST("/usuario", handlers.Registro_user)
+	m.POST("/login", handlers.Login)
 
-	r := e.Group("/secure")
+	r := e.Group("/secure", cjwt.MiddlewareJWT())
 
-	r.GET("/usuarios", handlers.Listar_user_secure, cjwt.MiddlewareJWT())
+	r.GET("/usuarios", handlers.Listar_user_secure)
 
 	//---------------------api externa-----------------------
 	e.GET("/externo", handlers.Traer_datos)
 
-	//url := echoSwagger.URL("http://localhost:8085/swagger/doc.json")
 	e.GET("/swagger/*", echoSwagger.WrapHandler)
 
 	e.Logger.Fatal(e.Start(":8085"))
