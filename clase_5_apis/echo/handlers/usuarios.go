@@ -26,6 +26,12 @@ type UserDTO struct {
 
 var users []User
 
+// @Description	get all users
+// @Summary		Listar todos los usuarios
+// @Produce		json
+// @Router			/users [get]
+// @Succes			200 {array} User
+// @Failure		404	{object}	map[string]interface{}
 func Get_users(c echo.Context) error {
 	if len(users) == 0 {
 		return c.JSON(404, echo.Map{"mensaje": "No hay usuarios"})
@@ -33,6 +39,13 @@ func Get_users(c echo.Context) error {
 	return c.JSON(200, users)
 }
 
+// @Description	ingresar nuevo usuario
+// @Summary		Ingresar un nuevo usuario
+// @Produce		json
+// @Router			/users [post]
+// @Succes			200 {string} echo.Map
+// @Failure		404		{string}	echo.Map
+// @Param			body	body		UserDTO	true	"body usuarios"
 func Post_users(c echo.Context) error {
 	var u UserDTO
 

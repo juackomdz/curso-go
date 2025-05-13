@@ -5,10 +5,19 @@ import (
 	"clase_5_echo/handlers"
 	cjwt "clase_5_echo/jwt"
 
+	_ "clase_5_echo/docs"
+
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
+	echoSwagger "github.com/swaggo/echo-swagger"
 )
 
+//	@title			swagger ejemplo
+//	@description	This is a sample server celler server.
+//	@version		1.0
+//
+//	@host			localhost:8085
+//	@BasePath		/
 func main() {
 
 	e := echo.New()
@@ -56,6 +65,9 @@ func main() {
 
 	//---------------------api externa-----------------------
 	e.GET("/externo", handlers.Traer_datos)
+
+	//url := echoSwagger.URL("http://localhost:8085/swagger/doc.json")
+	e.GET("/swagger/*", echoSwagger.WrapHandler)
 
 	e.Logger.Fatal(e.Start(":8085"))
 }

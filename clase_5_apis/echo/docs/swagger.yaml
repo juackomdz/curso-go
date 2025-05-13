@@ -1,0 +1,48 @@
+basePath: /
+definitions:
+  handlers.UserDTO:
+    properties:
+      apellido:
+        type: string
+      edad:
+        type: integer
+      nombre:
+        type: string
+    type: object
+host: localhost:8085
+info:
+  contact: {}
+  description: This is a sample server celler server.
+  title: swagger ejemplo
+  version: "1.0"
+paths:
+  /users:
+    get:
+      description: get all users
+      produces:
+      - application/json
+      responses:
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Listar todos los usuarios
+    post:
+      description: ingresar nuevo usuario
+      parameters:
+      - description: body usuarios
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.UserDTO'
+      produces:
+      - application/json
+      responses:
+        "404":
+          description: Not Found
+          schema:
+            type: string
+      summary: Ingresar un nuevo usuario
+swagger: "2.0"
