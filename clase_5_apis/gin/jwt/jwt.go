@@ -13,8 +13,6 @@ var Clave = []byte("rpIVZInJ81Be9xGMoi75")
 
 func Generar_token(username string, id string) (string, error) {
 
-	//echojwt.JWT(Clave)
-
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"nombre": username,
 		"id":     id,
@@ -51,7 +49,6 @@ func MiddlewareJWT() gin.HandlerFunc {
 			c.JSON(400, gin.H{"error": err.Error()})
 			c.Abort()
 			return
-			//log.Println("error en token")
 		}
 
 		_, ok := token.Claims.(jwt.MapClaims)
