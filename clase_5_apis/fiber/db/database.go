@@ -12,8 +12,9 @@ import (
 
 func Connect() rel.Repository {
 
-	dr := sql.Drivers()
-	log.Println("driver=", dr)
+	//dr := sql.Drivers()
+
+	//log.Println("driver=", dr)
 
 	//-----usar libreria sql standar porque por defecto no realiza el cambio de driver si se usa pgx--------------
 	dsn := "postgres://postgres:pass123@localhost:5432/rel?sslmode=disable"
